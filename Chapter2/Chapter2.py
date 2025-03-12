@@ -2,6 +2,9 @@ from vector_drawing import *
 from math import sin
 from math import cos
 from math import tan
+from math import atan
+from math import atan2
+from vectors import *
 
 dino_vectors = [(6,4), (3,1), (1,2), (-1,5), (-2,5), (-3,4), (-4,4),
     (-5,3), (-5,2), (-2,2), (-5,1), (-4,0), (-2,1), (-1,0), (0,-3),
@@ -167,6 +170,76 @@ def A2_31():
     print("cos(1/2pi): 0")
     print("cos(1pi): -1")
 
+def A2_32():
+    print(f"{(1/2)**2+(sqrt(3)/2)**2} = {1**2}")
+    print(f"sin(30degree) is {(1/2)/1}")
+    print(f"cos(30degree) is {(sqrt(3)/2)/1}")
+    print(f"tan(30degree) is {(1/2)/(sqrt(3)/2)}")
+
+def A2_33():
+    print(f"sin(60degree) is {(sqrt(3)/2)/1}")
+    print(f"cos(60degree) is {(1/2)/1}")
+    print(f"tan(60degree) is {(sqrt(3)/2)/(1/2)}")
+
+def A2_34():
+    print("0.648 = 0.643/1")
+    print(f"a**2+b**2=C**2, 0.643**2+b**2=1**2, b**2=1-0.643**2, b={sqrt(1-0.643**2)}")
+    b=sqrt(1-0.643**2)
+    print(f"sin(50degree)={b/1}")
+    print(f"tan(50degree)={b/0.643}")
+
+def A2_35():
+    print("180 degree=pi radian, 1 degree= 1/180 pi radian")
+    print(f"116.57 degree=116.67/180*pi radian={116.57/180*pi} radian")
+    print(f"tan({116.57/180*pi})={tan(116.57/180*pi)}")
+
+def A2_36():
+    print("10/6*180 degree={10/6*180} degree, 4 사분면")
+    print(f"cos(10pi/6)=positive number={cos(10*pi/6)}")
+    print(f"sin(10pi/6)=negative number={sin(10*pi/6)}")
+
+def my_to_cartesian(p):
+    return (p[0] * cos(p[1]), p[0] * sin(p[1]))
+
+def A2_37():
+    polars=[(cos(5*x*pi/500.0), 2*pi*x/1000.0) for x in range(0, 1001)]
+    descartes=[my_to_cartesian(elmt) for elmt in polars]
+    segments=[Segment(descartes[i], descartes[i+1]) for i in range(0, len(descartes)-1)]
+    draw(*segments)
+
+def A2_38():
+    print(f"atan(y,x)={atan2(3,-2)}")
+
+def A2_39():
+    print("(-3)/2 = 3/(-2)")
+    print(f"atan(3/-2)={atan(3/-2)}")
+
+def A2_40():
+    print("(sqrt(2), 45/180*pi), (sqrt(2), -45/180*pi)")
+    print(f"({sqrt(2)}, {45/180*pi}), ({sqrt(2)}, {-45/180*pi})")
+    print(f"{to_polar((1,1))}, {to_polar((1,-1))}")
+
+def to_positive_angle(polar):
+    if(polar[1] < 0):
+        return (polar[0], polar[1]%(-2*pi)+(2*pi))
+    else:
+        return (polar[0], polar[1]%(2*pi))
+def A2_41():
+    mouth1=to_positive_angle(to_polar(subtract((-5,2),(-2,2))))
+    mouth2=to_positive_angle(to_polar(subtract((-5,1),(-2,2))))
+    tail1=to_positive_angle(to_polar(subtract((3,1),(6,4))))
+    tail2=to_positive_angle(to_polar(subtract((5,1),(6,4))))
+    foot1=to_positive_angle(to_polar(subtract((0,-3),(-1,-4))))
+    foot2=to_positive_angle(to_polar(subtract((1,-4),(-1,-4))))
+
+    print(f"mouth={abs(mouth1[1]-mouth2[1])*180/pi}")
+    print(f"tail={abs(tail1[1]-tail2[1])*180/pi}")
+    print(f"foot={abs(foot1[1]-foot2[1])*180/pi}")
+
+def A2_42():
+    
+
+
 #A2_1()
 #A2_2()
 #A2_3()
@@ -196,5 +269,15 @@ def A2_31():
 #A2_27()
 #A2_28()
 #A2_29()
-A2_30()
-A2_31()
+#A2_30()
+#A2_31()
+#A2_32()
+#A2_33()
+#A2_34()
+#A2_35()
+#A2_36()
+#A2_37()
+#A2_38()
+#A2_39()
+#A2_40()
+#A2_41()
