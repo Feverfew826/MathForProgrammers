@@ -236,8 +236,27 @@ def A2_41():
     print(f"tail={abs(tail1[1]-tail2[1])*180/pi}")
     print(f"foot={abs(foot1[1]-foot2[1])*180/pi}")
 
+def rotate(angle, vectors):
+    polars=[to_polar(vector) for vector in vectors]
+    rotatedPolars=[(polar[0], polar[1]+angle) for polar in polars]
+    return [to_cartesian(polar) for polar in rotatedPolars]
 def A2_42():
+    draw(Polygon(*dino_vectors))
+    draw(Polygon(*rotate(45/180*pi, dino_vectors)))
+    draw(Polygon(*rotate(-45/180*pi, dino_vectors)))
     
+def regular_polygon(n):
+    angleStep=2*pi/n
+    return [to_cartesian((1, angleStep * i)) for i in range(0, n)]
+def A2_43():
+    regularPolygon = regular_polygon(7)
+    draw(Points(*regularPolygon), Polygon(*regular_polygon(7)))
+
+def A2_44():
+    transitionRotation=Polygon(*rotate(5/3*pi, [add([vector, (8,8)]) for vector in dino_vectors]))
+    rotationTransition=Polygon(*[add([vector, (8,8)]) for vector in rotate(5/3*pi, dino_vectors)])
+    draw(transitionRotation, rotationTransition)
+
 
 
 #A2_1()
@@ -281,3 +300,6 @@ def A2_42():
 #A2_39()
 #A2_40()
 #A2_41()
+#A2_42()
+#A2_43()
+#A2_44()
