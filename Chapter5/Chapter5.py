@@ -4,6 +4,7 @@ from math import pi
 import numpy.random
 from draw_model import *
 from teapot import *
+from draw3d import *
 
 def infer_matrix(n, transformation):
     return zip(*[transformation(tuple([1 if n1==n2 else 0 for n2 in range(0,n)])) for n1 in range(0, n)])
@@ -148,6 +149,141 @@ def A15():
     )
     print(ex_matrix_multiply(BadA,B))
 
+def A16():
+    print("b, 2X2")
+    print("c, 3X8")
+
+def A17():
+    print("5X3 행렬과 3X2 행렬을 곱할 수 잇으며, 5X2")
+
+# 못 품
+def transpose(vector):
+    return;
+def A18():
+    transpose(((1, 2, 3),))
+    transpose(((1,) (2,), (3,)))
+
+# 연습장에 그림.
+def A19():
+    print("서로 어떻게 곱하려고 시도하던지 열의 수와 행의 수가 일치하지 않는다.")
+
+def A20():
+    print("2X3*3X5*5X7 순으로 곱할 수 있다. 결과 행렬의 크기는 2X7")
+
+def A21():
+    print("yz: ((0,1,0), (0,0,1))")
+    print("xz: ((1,0,0), (0,0,1))")
+
+# 못 품
+def A22():
+    return;
+
+def A23():
+    print("("
+    "   (1, 1, 1, 1, 1),"
+    "   (1, 0, 1, 1, 1),"
+    "   (1, 1, 0, 1, 1),"
+    "   (1, 1, 1, 0, 1),"
+    ")")
+
+def A24():
+    print("("
+    "   (0, 0, 0, 0, 0, 1),"
+    "   (0, 0, 0, 1, 0, 0),"
+    "   (1, 0, 0, 0, 0, 0),"
+    "   (0, 1, 0, 0, 0, 0),"
+    "   (0, 0, 1, 0, 0, 0),"
+    "   (0, 0, 0, 0, 1, 0),"
+    ")")
+
+def A25():
+    print("M*M, 3X3")
+    print("N*N, 2X2")
+    print("N*P, 2X3")
+    print("N*Q, 2X3")
+    print("P*M, 2X3")
+    print("Q*M, 2X3")
+
+dino_vectors = [(6,4), (3,1), (1,2), (-1,5), (-2,5), (-3,4), (-4,4),
+    (-5,3), (-5,2), (-2,2), (-5,1), (-4,0), (-2,1), (-1,0), (0,-3),
+    (-1,-4), (1,-4), (2,-3), (1,-2), (3,-1), (5,1)
+]
+def polygon_segments_3d(points,color='blue'):
+    count = len(points)
+    return [Segment3D(points[i], points[(i+1) % count], color=color) for i in range(0, count)]
+magic_matrix = (
+    (1,0,3),
+    (0,1,1),
+    (0,0,1)
+)
+def A26():
+    dino_3d = [(x,y,2) for x,y in dino_vectors]
+    translated = [multiply_matrix_vector(magic_matrix, v) for v in dino_3d]
+    draw3d(Points3D(*dino_3d, color='blue'), *polygon_segments_3d(dino_3d), Points3D(*translated, color='red'), *polygon_segments_3d(translated, 'red'))
+    print("두 배 이동한다.")
+
+def A27():
+    matrix27 = (
+        (1,0,-2),
+        (0,1,-2),
+        (0,0,1)
+    )
+    dino_3d = [(x,y,1) for x,y in dino_vectors]
+    translated = [multiply_matrix_vector(matrix27, v) for v in dino_3d]
+    draw3d(Points3D(*dino_3d, color='blue'), *polygon_segments_3d(dino_3d), Points3D(*translated, color='red'), *polygon_segments_3d(translated, 'red'))
+
+def A28():
+    print("전개하면 다음과 같이 되므로, z값이 유지된다.")
+    print("("
+        "(ax+by+cz,),"
+        "(dx+ey+fz,),"
+        "(0x+0y+1z,)"
+    ")")
+
+def A29():
+    matrix29 = (
+        (0.5*cos(pi/4),-0.5*cos(pi/4),2),
+        (0.5*sin(pi/4),0.5*sin(pi/4),2),
+        (0,0,1)
+    )
+    dino_3d = [(x,y,1) for x,y in dino_vectors]
+    translated = [multiply_matrix_vector(matrix29, v) for v in dino_3d]
+    draw3d(Points3D(*dino_3d, color='blue'), *polygon_segments_3d(dino_3d), Points3D(*translated, color='red'), *polygon_segments_3d(translated, 'red'))
+
+def A30():
+    matrix29 = (
+        (0.5*cos(pi/4),-0.5*cos(pi/4),2),
+        (0.5*sin(pi/4),0.5*sin(pi/4),2),
+        (0,0,1)
+    )
+    matrix30 = (
+        (0.5*cos(pi/4),-0.5*cos(pi/4),cos(pi/4)),
+        (0.5*sin(pi/4),0.5*sin(pi/4),2*sin(pi/4)),
+        (0,0,1)
+    )
+    dino_3d = [(x,y,1) for x,y in dino_vectors]
+    translated29 = [multiply_matrix_vector(matrix29, v) for v in dino_3d]
+    translated30 = [multiply_matrix_vector(matrix30, v) for v in dino_3d]
+    draw3d(Points3D(*dino_3d, color='blue'), *polygon_segments_3d(dino_3d), Points3D(*translated29, color='red'), *polygon_segments_3d(translated29, 'red') ,Points3D(*translated30, color='black'), *polygon_segments_3d(translated30, 'black'))
+
+def translate_4d(translation):
+    def new_fuction(target):
+        a,b,c,d = translation
+        x,y,z,w = target
+        matrix = (
+            (1,0,0,0,a),
+            (0,1,0,0,b),
+            (0,0,1,0,c),
+            (0,0,0,1,d),
+            (0,0,0,0,1)
+            )
+        vector = (x, y, z, w, 1)
+        x_out, y_out, z_out, w_out,_ = multiply_matrix_vector(matrix, vector)
+        return (x_out, y_out, z_out, w_out)
+    return new_fuction
+def A31():
+     print(translate_4d((1,2,3,4))((10,20,30,40)))
+
 #A1()
 #A2()
 #A3()
@@ -162,4 +298,20 @@ def A15():
 #A12()
 #A13()
 #A14()
-A15()
+#A15()
+#A16()
+#A17()
+#A18()
+#A19()
+#A20()
+#A21()
+#A22()
+#A23()
+#A24()
+#A25()
+#A26()
+#A27()
+#A28()
+#A29()
+#A30()
+A31()
