@@ -304,6 +304,34 @@ def A16():
         u, v, w = random_matrix5_by_3(), random_matrix5_by_3(), random_matrix5_by_3()
         testWithZero(Matrix5_by_3.zero(), approx_equal_matrix5_by_3, a,b,u,v,w)
 
+class LinearMap3d_to_5d(Vector):
+    def __init__(self, mat):
+        self.mat = mat
+    def scale(self, scalar):
+        return tuple([tuple([elmt * scalar for elmt in row]) for row in self.mat])
+    def add(self, other):
+        return tuple([tuple([pair[0] + pair[1] for pair in zip(rowPair[0], rowPair[1])]) for rowPair in zip(self.mat, other.mat)])
+    def __repr__(self):
+        return self.mat.__repr__()
+    def __call__(self, *args):
+        return tuple([tuple([sum([args[0][m][0] * self.mat[n][m] for m in range(0, 3)])]) for n in range(0, 5)])
+
+def A17():
+    mat = ((1, 2, 3),
+           (4, 5, 6),
+           (7, 8, 9),
+           (10, 11, 12),
+           (13, 14, 15))
+    a=LinearMap3d_to_5d(mat)
+    b=LinearMap3d_to_5d(mat)
+    c=a(((1,), (2,), (3,)))
+    print(a)
+    print(b)
+    print(a * 3)
+    print(a + b)
+    print(c)
+
+
 #A1()
 #A2()
 #A3()
@@ -319,4 +347,5 @@ def A16():
 #A13()
 #A14()
 #A15()
-A16()
+#A16()
+A17()
